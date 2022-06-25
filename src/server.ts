@@ -1,10 +1,10 @@
-import { makeExecutableSchema } from "@graphql-tools/schema"
 import { ApolloServer, gql } from "apollo-server-express";
 import { Application } from "express";
-import { GraphQLSchema } from "graphql";
 import { Server, createServer } from 'http';
 import express from 'express';
 import compression from 'compression';
+import { GraphQLSchema } from 'graphql';
+
 
 class GraphQLServer {
 
@@ -13,7 +13,13 @@ class GraphQLServer {
     private _httpServer!: Server;
     private readonly _DEFAULT_PORT = 3025;
 
-    constructor() {
+    private _schema!: GraphQLSchema
+
+    constructor(schema: GraphQLSchema) {
+        if (schema=== undefined){
+            throw new Error("Undefined schema GraphQL")
+        }
+        this._schema = schema;
         this.init();
     }
 
@@ -32,66 +38,8 @@ class GraphQLServer {
 
     private async configApolloServerExpress() {
 
-        const books = [
-            {
-                title: 'The Awakening',
-                author: 'Kate Chopin',
-            },
-            {
-                title: 'City of Glass',
-                author: 'Paul Auster',
-            },
-        ];
-
-        //Define Schema
-
-        const typeDefs = gql`
-        # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
-
-        # This "Book" type defines the queryable fields for every book in our data source.
-        type Book {
-            title: String
-            author: String
-        }
-
-        # The "Query" type is special: it lists all of the available queries that
-        # clients can execute, along with the return type for each. In this
-        # case, the "books" query returns an array of zero or more Books (defined above).
-        type Query {
-            ping: String!
-            books: [Book]
-            hello(name:String):String!
-        }
-    `;
-
-        // Resolvers
-
-        const resolvers = {
-            Query: {
-                ping: (): string => 'pong',
-
-                books: () => books,
-
-                hello: (
-                    _: void,
-                    args: { name: String },
-                    context: any,
-                    info: object
-                ) => {
-                    console.log(info);
-                    return `Hello ${args.name}`;
-                },
-            }
-        };
-
-
-        const schema: GraphQLSchema = makeExecutableSchema({
-            typeDefs,
-            resolvers
-        });
-
         const apolloServer = new ApolloServer({
-            schema,
+            schema: this._schema,
             introspection: true
         });
 
