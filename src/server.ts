@@ -19,6 +19,7 @@ class GraphQLServer {
         if (schema=== undefined){
             throw new Error("Undefined schema GraphQL")
         }
+        
         this._schema = schema;
         this.init();
     }

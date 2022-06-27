@@ -11,7 +11,7 @@ const books = [
     },
 ];
 
-const resolvers: IResolvers = {
+const queryResolvers: IResolvers = {
 
     Query: {
         ping: (): string => 'pong',
@@ -31,4 +31,4 @@ const resolvers: IResolvers = {
 };
 
 
-export default resolvers
+export default queryResolvers
