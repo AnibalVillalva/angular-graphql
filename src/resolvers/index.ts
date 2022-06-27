@@ -1,7 +1,7 @@
-import resolvers from "./query";
+import queryResolvers from "./query";
 
  const resolverIndex = {
-    ...resolvers
+     ...queryResolvers
 }
 
 export default resolverIndex
