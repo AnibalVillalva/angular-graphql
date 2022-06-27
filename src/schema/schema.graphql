@@ -1,7 +1,14 @@
 # This "Book" type defines the queryable fields for every book in our data source.
 type Book {
-  title: String
-  author: String
+    id: ID!,
+    title: String!
+    isbn: String!
+    pageCount: Int!
+    publishedDate: String
+    thumbnailUrl: String
+    longDescription: String
+    status: String,
+    authors: [String!]!
 }
 
 # The "Query" type is special: it lists all of the available queries that

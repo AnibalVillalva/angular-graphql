@@ -1,22 +1,15 @@
 import { IResolvers } from "@graphql-tools/utils";
-
-const books = [
-    {
-        title: 'The Awakening',
-        author: 'Kate Chopin',
-    },
-    {
-        title: 'City of Glass',
-        author: 'Paul Auster',
-    },
-];
+import data from "../data"
+import { IBook } from "../interfaces/book-interfaces";
 
 const queryResolvers: IResolvers = {
 
     Query: {
         ping: (): string => 'pong',
 
-        books: () => books,
+        books: (): Array<IBook> => {
+            return data.books;
+        },
 
         hello: (
             _: void,
