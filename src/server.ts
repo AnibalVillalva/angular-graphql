@@ -1,71 +1,69 @@
-import { ApolloServer, gql } from "apollo-server-express";
-import { Application } from "express";
-import { Server, createServer } from 'http';
-import express from 'express';
-import compression from 'compression';
-import { GraphQLSchema } from 'graphql';
+import { ApolloServer } from "apollo-server-express";
+import compression from "compression";
+import express, { Application } from "express";
+import { GraphQLSchema } from "graphql";
+import depthLimit from "graphql-depth-limit";
+import { createServer, Server } from "http";
 
 
 class GraphQLServer {
-
-    // Properties
-    private _app!: Application;
-    private _httpServer!: Server;
-    private readonly _DEFAULT_PORT = 3025;
-
-    private _schema!: GraphQLSchema
-
-    constructor(schema: GraphQLSchema) {
-        if (schema=== undefined){
-            throw new Error("Undefined schema GraphQL")
-        }
-        
-        this._schema = schema;
-        this.init();
+  // Propiedades
+  private app!: Application;
+  private httpServer!: Server;
+  private readonly DEFAULT_PORT = process.env.PORT || 3025;
+  private schema!: GraphQLSchema;
+  constructor(schema: GraphQLSchema) {
+    if (schema === undefined) {
+      throw new Error("Necesitamos un schema de GraphQL para trabajar con APIs GraphQL");
     }
+    this.schema = schema;
+    this.init();
+  }
 
-    init() {
-        this.configExpress();
-        this.configApolloServerExpress();
-        this.configRoutes();
-    }
+  private init() {
+    this.configExpress();
+    this.configApolloServerExpress();
+    this.configRoutes();
+  }
 
-    private configExpress() {
-        this._app = express();
-        this._app.use(compression());
+  private configExpress() {
+    this.app = express();
 
-        this._httpServer = createServer(this._app);
-    }
+    this.app.use(compression());
 
-    private async configApolloServerExpress() {
+    this.httpServer = createServer(this.app);
+  }
 
-        const apolloServer = new ApolloServer({
-            schema: this._schema,
-            introspection: true
-        });
+  private async configApolloServerExpress() {
 
-        await apolloServer.start();
+    const apolloServer = new ApolloServer({
+      schema: this.schema,
+      introspection: true,
+      validationRules: [ depthLimit(3) ]
+    });
 
-        apolloServer.applyMiddleware({ app: this._app, cors: true });
-    }
+    await apolloServer.start();
 
-    private configRoutes() {
-        this._app.get("/hello", (_, res) => {
-            res.send("Hello");
-        });
+    apolloServer.applyMiddleware({ app: this.app, cors: true });
 
-        this._app.get("/", (_, res) => {
-            res.redirect("/graphql")
-        });
+   
+  }
 
-     }
+  private configRoutes() {
+    this.app.get("/hello", (_, res) => {
+      res.send("Bienvenid@s al primer proyecto");
+    });
+  
+    this.app.get("/", (_, res) => {
+      res.redirect("/graphql");
+    });
+  }
 
-    listen(callback: (port: number) => void): void {
-        this._httpServer.listen(+this._DEFAULT_PORT, () => {
-            callback(+this._DEFAULT_PORT)
-        })
-    }
-
+  listen(callback: (port: number) => void): void {
+    this.httpServer.listen(+this.DEFAULT_PORT, () => {
+      callback(+this.DEFAULT_PORT);
+    });
+  }
 }
 
 export default GraphQLServer;

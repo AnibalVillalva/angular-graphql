@@ -1,7 +1,13 @@
-import queryResolvers from "./query";
+import path from "path";
+import { mergeResolvers } from "@graphql-tools/merge";
+import { loadFilesSync } from "@graphql-tools/load-files";
 
- const resolverIndex = {
-     ...queryResolvers
-}
+const resolversArray = loadFilesSync(path.join(__dirname), {
+  extensions: ["ts", "js"],
+});
 
-export default resolverIndex
+console.log(resolversArray);
+
+const resolversIndex =  mergeResolvers(resolversArray);
+
+export default resolversIndex;
