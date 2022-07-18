@@ -1,6 +1,6 @@
-import { IResolvers } from "@graphql-tools/utils";
-import data from "../../data";
-import { IBook } from "../../interfaces/book-interface";
+import { IResolvers } from '@graphql-tools/utils';
+import data from '../../data';
+import { IBook } from '../../interfaces/book-interface';
 
 const mutationBookResolvers: IResolvers = {
   Mutation: {
@@ -18,7 +18,7 @@ const mutationBookResolvers: IResolvers = {
       ) {
         return {
           status: false,
-          message: "El libro que estás introduciendo ya existe. Prueba con otro por favor",
+          message: 'El libro que estás introduciendo ya existe. Prueba con otro por favor'
         };
       }
       const idValue = +data.books[data.books.length - 1].id + 1;
@@ -27,7 +27,7 @@ const mutationBookResolvers: IResolvers = {
       return {
         status: true,
         message: `Libro con el título ${args.book.title} ha sido añadido correctamente`,
-        item: args.book,
+        item: args.book
       };
     },
     updateBook: (
@@ -46,7 +46,7 @@ const mutationBookResolvers: IResolvers = {
         return {
           status: false,
           message:
-            "El libro que estás introduciendo no existe y no puedes actualizarlo. Revisa que ese id sea el correcto",
+            'El libro que estás introduciendo no existe y no puedes actualizarlo. Revisa que ese id sea el correcto'
         };
       }
 
@@ -59,8 +59,8 @@ const mutationBookResolvers: IResolvers = {
       }
       return {
         status: true,
-        message: "Actualizado correctamente el libro seleccionado",
-        item: args.book,
+        message: 'Actualizado correctamente el libro seleccionado',
+        item: args.book
       };
     },
     deleteBook: (
@@ -80,10 +80,10 @@ const mutationBookResolvers: IResolvers = {
       }
       return {
         status: deleteItem,
-        message: deleteItem ? "Eliminado" : "No se ha eliminado ningún libro",
+        message: deleteItem ? 'Eliminado' : 'No se ha eliminado ningún libro'
       };
     }
-  },
+  }
 };
 
 export default mutationBookResolvers;

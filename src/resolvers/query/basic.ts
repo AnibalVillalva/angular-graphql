@@ -1,8 +1,8 @@
-import { IResolvers } from "@graphql-tools/utils";
+import { IResolvers } from '@graphql-tools/utils';
 
 const queryBasicResolvers: IResolvers = {
   Query: {
-    hello: (): string => "Hola a la API de GraphQL",
+    hello: (): string => 'Hola a la API de GraphQL',
     helloWithName: (
       _: void,
       args: { name: string },
@@ -12,8 +12,8 @@ const queryBasicResolvers: IResolvers = {
       console.log(info);
       return `Hola ${args.name}`;
     },
-    peopleNumber: () => 189303,
-  },
+    peopleNumber: () => 189303
+  }
 };
 
 export default queryBasicResolvers;
