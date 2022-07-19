@@ -1,5 +1,5 @@
-import GraphQLServer from "./server";
-import schema from "./schema";
+import GraphQLServer from './server';
+import schema from './schema';
 
 const graphQLServer = new GraphQLServer(schema);
 

@@ -1,5 +1,5 @@
-import { IResolvers } from "@graphql-tools/utils";
-import data from "../../data";
+import { IResolvers } from '@graphql-tools/utils';
+import data from '../../data';
 
 const typesBookResolvers: IResolvers = {
   Book: {
@@ -7,18 +7,18 @@ const typesBookResolvers: IResolvers = {
       return data.people.filter((people) => people.books.indexOf(root.id) > -1);
     },
     publishedDate: (root: { publishedDate: string }) => {
-      return root.publishedDate === undefined ? "?" : root.publishedDate;
+      return root.publishedDate === undefined ? '?' : root.publishedDate;
     },
     thumbnailUrl: (root: { thumbnailUrl: string }) => {
-      return root.thumbnailUrl === undefined ? "-" : root.thumbnailUrl;
+      return root.thumbnailUrl === undefined ? '-' : root.thumbnailUrl;
     },
     shortDescription: (root: { shortDescription: string }) => {
-      return root.shortDescription === undefined ? "-" : root.shortDescription;
+      return root.shortDescription === undefined ? '-' : root.shortDescription;
     },
     longDescription: (root: { longDescription: string }) => {
-      return root.longDescription === undefined ? "-" : root.longDescription;
-    },
-  },
+      return root.longDescription === undefined ? '-' : root.longDescription;
+    }
+  }
 };
 
 export default typesBookResolvers;

@@ -1,4 +1,4 @@
-import { IResolvers } from "@graphql-tools/utils";
+import { IResolvers } from '@graphql-tools/utils';
 
 const typesUnionResolvers: IResolvers = {
   Data: {
@@ -15,14 +15,14 @@ const typesUnionResolvers: IResolvers = {
       }
     ) {
       let type = null;
-      ["Book", "People"].map((object) => {
+      ['Book', 'People'].map((object) => {
         if (info.operation.name.value.search(object) > -1) {
           type = object;
         }
       });
       return type;
-    },
-  },
+    }
+  }
 };
 
 export default typesUnionResolvers;

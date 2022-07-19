@@ -1,6 +1,6 @@
-import { IPeople } from "../../interfaces/people-interface";
-import { IResolvers } from "@graphql-tools/utils";
-import data from "../../data";
+import { IPeople } from '../../interfaces/people-interface';
+import { IResolvers } from '@graphql-tools/utils';
+import data from '../../data';
 
 const mutationPeopleResolvers: IResolvers = {
   Mutation: {
@@ -18,7 +18,7 @@ const mutationPeopleResolvers: IResolvers = {
       ) {
         return {
           status: false,
-          message: "La persona que estás introduciendo ya existe. Prueba con otro por favor",
+          message: 'La persona que estás introduciendo ya existe. Prueba con otro por favor'
         };
       }
       const idValue = +data.people[data.people.length - 1].id + 1;
@@ -27,7 +27,7 @@ const mutationPeopleResolvers: IResolvers = {
       return {
         status: true,
         message: `Persona con el nombre ${args.people.name} ha sido añadido correctamente`,
-        item: args.people,
+        item: args.people
       };
     },
     updatePeople: (
@@ -46,7 +46,7 @@ const mutationPeopleResolvers: IResolvers = {
         return {
           status: false,
           message:
-            "El libro que estás introduciendo no existe y no puedes actualizarlo. Revisa que ese id sea el correcto",
+            'El libro que estás introduciendo no existe y no puedes actualizarlo. Revisa que ese id sea el correcto'
         };
       }
 
@@ -59,8 +59,8 @@ const mutationPeopleResolvers: IResolvers = {
       }
       return {
         status: true,
-        message: "Actualizado correctamente la persona seleccionada",
-        item: args.people,
+        message: 'Actualizado correctamente la persona seleccionada',
+        item: args.people
       };
     },
     deletePeople: (
@@ -80,10 +80,10 @@ const mutationPeopleResolvers: IResolvers = {
       }
       return {
         status: deleteItem,
-        message: deleteItem ? "Eliminado" : "No se ha eliminado ninguna persona",
+        message: deleteItem ? 'Eliminado' : 'No se ha eliminado ninguna persona'
       };
-    },
-  },
+    }
+  }
 };
 
 export default mutationPeopleResolvers;
